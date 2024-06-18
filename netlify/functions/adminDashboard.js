@@ -1,3 +1,4 @@
+const escape = require("escape-html")
 const { MongoClient } = require("mongodb")
 const isAdmin = require("../../our-library/isAdmin")
 
@@ -34,10 +35,10 @@ function generateHTML(pets) {
   ourHTML += pets.map(pet => {
     return `<div class="pet-card">
     <div class="pet-card-text">
-      <h3>${pet.name}</h3>
-      <p class="pet-description">${pet.description}</p>
+      <h3>${escape(pet.name)}</h3>
+      <p class="pet-description">${escape(pet.description)}</p>
       <div class="action-buttons">
-        <a class="action-btn" href="#">Edit</a>
+        <a class="action-btn" href="/admin/edit-pet?id=${pet._id}">Edit</a>
         <button class="action-btn">Delete</button>
       </div>
     </div>
