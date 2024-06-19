@@ -1,15 +1,12 @@
 const escape = require("escape-html")
-const { MongoClient } = require("mongodb")
+const getDbClient = require("../../our-library/getDbClient")
 const isAdmin = require("../../our-library/isAdmin")
 
-const cookie = require("cookie")
 
 const handler = async event => {
 
   if (isAdmin(event)) {
-    const client = new MongoClient(process.env.CONNECTIONSTRING)
-    await client.connect()
-
+    const client = await getDbClient()
     const pets = await client.db().collection("pets").find().toArray()
     client.close()
 
@@ -39,7 +36,7 @@ function generateHTML(pets) {
       <p class="pet-description">${escape(pet.description)}</p>
       <div class="action-buttons">
         <a class="action-btn" href="/admin/edit-pet?id=${pet._id}">Edit</a>
-        <button class="action-btn">Delete</button>
+        <button onClick="handleDelete('${pet._id}', this)" class="action-btn">Delete</button>
       </div>
     </div>
     <div class="pet-card-photo">

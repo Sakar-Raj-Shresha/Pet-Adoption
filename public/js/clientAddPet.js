@@ -7,7 +7,7 @@ document.querySelector("#add-new-pet-form").addEventListener("submit", async fun
     species: document.querySelector("#species").value,
     description: document.querySelector("#description").value
   }
-
+  document.querySelector("#add-new-pet-form").classList.add("form-is-loading")
   const ourPromise = await fetch("/.netlify/functions/addPet", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

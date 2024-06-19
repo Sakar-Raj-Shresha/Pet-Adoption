@@ -11,23 +11,18 @@ const handler = async event => {
       return {
         statusCode: 200,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({})
+        body: JSON.stringify({ success: false })
       }
     }
     const client = await getDbClient()
 
-    const pet = await client.db().collection("pets").findOne({ _id: new ObjectId(body.id) })
+    await client.db().collection("pets").deleteOne({ _id: new ObjectId(body.id) })
     client.close()
-
-    pet.name = escape(pet.name)
-    pet.birthYear = escape(pet.birthYear)
-    pet.species = escape(pet.species)
-    pet.description = escape(pet.description)
 
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(pet)
+      body: JSON.stringify({ success: true })
     }
   }
 

@@ -38,6 +38,7 @@ const handler = async event => {
     }
     const client = await getDbClient()
     await client.db().collection("pets").findOneAndUpdate({ _id: new ObjectId(body.id) }, { $set: pet })
+    client.close()
     return {
       statusCode: 200,
       header: { "Content-Type": "application/json" },

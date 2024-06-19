@@ -30,6 +30,7 @@ const handler = async event => {
     // actually save into database
     const client = await getDbClient()
     await client.db().collection("pets").insertOne(pet)
+    client.close()
     return {
       statusCode: 200,
       header: { "Content-Type": "application/json" },

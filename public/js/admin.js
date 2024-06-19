@@ -11,3 +11,12 @@ async function start() {
 }
 
 start()
+
+function handleDelete(id, el) {
+  el.closest(".pet-card").remove()
+  fetch("/.netlify/functions/deletePet", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id })
+  })
+}

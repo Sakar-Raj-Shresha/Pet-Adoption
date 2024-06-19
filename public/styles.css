@@ -390,3 +390,17 @@ textarea.form-field {
 .still-loading {
   animation: .6s loadingflashing ease-in-out alternate infinite;
 }
+
+.form-is-loading .form-field {
+  background-color: #b9b9b9;
+  color: #b9b9b9;
+  border: 1px solid #b9b9b9
+}
+
+.form-is-loading .form-field::placeholder {
+  color: #b9b9b9;
+}
+
+.form-is-loading {
+  animation: .6s loadingflashing ease-in-out alternate infinite;
+}

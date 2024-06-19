@@ -17,6 +17,9 @@ async function getEditPet() {
   document.querySelector("#birthYear").value = pet.birthYear
   document.querySelector("#species").value = pet.species
   document.querySelector("#description").value = pet.description
+
+  document.querySelector("#edit-pet-form").classList.remove("form-is-loading")
+  document.querySelector("#name").focus()
 }
 getEditPet()
 document.querySelector("#edit-pet-form").addEventListener("submit", async function (e) {
@@ -30,7 +33,7 @@ document.querySelector("#edit-pet-form").addEventListener("submit", async functi
     description: document.querySelector("#description").value
 
   }
-
+  document.querySelector("#edit-pet-form").classList.add("form-is-loading")
   const ourPromise = await fetch("/.netlify/functions/saveChanges", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
