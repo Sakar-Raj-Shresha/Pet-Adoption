@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^2.2.0",
     "cookie": "^0.5.0",
     "escape-html": "^1.0.3",
     "mongodb": "^6.7.0",
