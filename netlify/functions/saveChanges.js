@@ -1,7 +1,14 @@
+const cloudinary = require("cloudinary").v2
 const sanitizeHtml = require("sanitize-html")
 const getDbClient = require("../../our-library/getDbClient")
 const isAdmin = require("../../our-library/isAdmin")
 const { ObjectId } = require("mongodb")
+const cloudinaryConfig = cloudinary.config({
+  cloud_name: "dhhoyblxa",
+  api_key: "264591535821965",
+  api_secret: process.env.CLOUDINARYSECRET,
+  secure: true
+})
 
 function cleanUp(x) {
   return sanitizeHtml(x, {
@@ -26,7 +33,10 @@ const handler = async event => {
   if (pet.species != "cat" && pet.species != "dog") {
     pet.species = "dog"
   }
-
+  const expectedSignature = cloudinary.utils.api_sign_request({ public_id: body.public_id, version: body.version }, cloudinaryConfig.api_secret)
+  if (expectedSignature === body.signature) {
+    pet.photo = body.public_id
+  }
   if (isAdmin(event)) {
     // actually save into database
     if (!ObjectId.isValid(body.id)) {
